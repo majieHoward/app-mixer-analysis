@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>设备车辆监控</title>
+<meta
+	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+	name='viewport'>
+<!-- Bootstrap 3.3.4 -->
+<link
+	href="${contextPath}/assets/thirdParty/bootstrap/bootstrap-3.3.5/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
+<!-- Font Awesome Icons -->
+<link href="${contextPath}/assets/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css" />
+<!-- Ionicons -->
+<link href="${contextPath}/assets/css/ionicons.min.css" rel="stylesheet"
+	type="text/css" />
+<!-- Theme style -->
+<link href="${contextPath}/assets/css/AdminLTE/AdminLTE.css"
+	rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/css/AdminLTE/skins/skin-blue.min.css"
+	rel="stylesheet" type="text/css" />
+<!-- css-page-preload-animations -->
+<link href="${contextPath}/assets/thirdParty/pagePreloadAnimations/css/Icomoon/style.css"
+	rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/thirdParty/pagePreloadAnimations/css/main.css"
+	rel="stylesheet" type="text/css" />
+<!-- css-page-preload-animations -->
+<!--  <link href="style.css" rel="stylesheet" type="text/css" />-->
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="${contextPath}/assets/thirdParty/js/html5shiv.min.js"></script>
+        <script src="${contextPath}/assets/thirdParty/js/respond.min.js"></script>
+    <![endif]-->
+<style>
+#loading{
+	background-color: #367FA9;
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	z-index: 2030;
+	margin-top: 0px;
+	top: 0px;
+}
+
+#loading-center{
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+#loading-center-absolute {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	height: 200px;
+	width: 200px;
+	margin-top: -100px;
+	margin-left: -100px;
+	-ms-transform: rotate(-135deg); 
+   	-webkit-transform: rotate(-135deg); 
+    transform: rotate(-135deg);
+}
+
+.object{
+	-moz-border-radius: 50% 50% 50% 50%;
+	-webkit-border-radius: 50% 50% 50% 50%;
+	border-radius: 50% 50% 50% 50%;
+	position: absolute;
+	border-top: 5px solid #FFF;
+	border-bottom: 5px solid transparent;
+	border-left:  5px solid #FFF;
+	border-right: 5px solid transparent;
+	-webkit-animation: animate 2s infinite;
+	animation: animate 2s infinite;	
+}
+
+#object_one{
+	left: 75px;
+	top: 75px;
+	width: 50px;
+	height: 50px;
+}
+							
+#object_two{
+	left: 65px;
+	top: 65px;
+	width: 70px;
+	height: 70px;
+	-webkit-animation-delay: 0.2s;
+    animation-delay: 0.2s;
+}
+		
+#object_three{
+	left: 55px;
+	top: 55px;
+	width: 90px;
+	height: 90px;
+	-webkit-animation-delay: 0.4s;
+    animation-delay: 0.4s;
+}
+
+#object_four{
+	left: 45px;
+	top: 45px;
+	width: 110px;
+	height: 110px;
+	-webkit-animation-delay: 0.6s;
+    animation-delay: 0.6s;
+}	
+#allmap {width: 100%;height:600px;overflow: hidden;margin:0;font-family:"微软雅黑";}
+@-webkit-keyframes animate {
+50% {
+
+	-ms-transform: rotate(360deg) scale(0.8); 
+   	-webkit-transform: rotate(360deg) scale(0.8); 
+    transform: rotate(360deg) scale(0.8); 
+  }
+}
+
+@keyframes animate {
+50% {
+
+	-ms-transform: rotate(360deg) scale(0.8); 
+   	-webkit-transform: rotate(360deg) scale(0.8); 
+    transform: rotate(360deg) scale(0.8); 
+  }	
+}
+</style>
+</head>
+<body class="skin-blue fixed" data-spy="scroll" data-target="#scrollspy">
+	<!--  -->
+	<div id="loading">
+<div id="loading-center">
+<div id="loading-center-absolute">
+<div class="object" id="object_four"></div>
+<div class="object" id="object_three"></div>
+<div class="object" id="object_two"></div>
+<div class="object" id="object_one"></div>
+</div>
+</div>
+ 
+</div>
+	<!--  -->
+	<div class="wrapper">
+		<!-- page header start -->
+		<header class="main-header">
+			<!-- Logo -->
+			<!-- Logo -->
+			<a href="#" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+				<span class="logo-mini"><b><@howard.m "page.main.logo"/></b></span> <!-- logo for regular state and mobile devices -->
+				<span class="logo-lg"><b><@howard.m "page.main.logo"/></b></span>
+			</a>
+			<!-- Header Navbar: style can be found in header.less -->
+			<nav class="navbar navbar-static-top" role="navigation">
+				<!-- Sidebar toggle button-->
+				<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
+					role="button"> <span class="sr-only"></span>
+				</a>
+				<!-- Navbar Right Menu -->
+				<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
+						<li><a href="#">注销</a></li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<!-- page header end -->
+		<!-- Left side column. contains the logo and sidebar -->
+		<aside class="main-sidebar">
+			<!-- sidebar: style can be found in sidebar.less -->
+			<div class="sidebar" id="scrollspy">
+			    <!--  
+				<div class="input-group sidebar-form">
+					<input type="text" name="q" class="form-control"
+						placeholder="设备号..." /> <span class="input-group-btn">
+						<button type='submit' name='search' id='search-btn'
+							class="btn btn-flat"></button>
+					</span>
+				</div>
+				-->
+				<!-- sidebar menu: : style can be found in sidebar.less -->
+				<ul class="nav sidebar-menu">
+					<li class="header"></li>
+					<!-- menu items start -->
+					<li><a href="${contextPath}/analysisadmin/analysis/index.html"><i class="fa fa-th"></i>
+							<span>首页</span><small class="label pull-right bg-green">new</small>
+					</a>
+					</li>
+					<li class="treeview"><a href="#"><i class="fa fa-files-o"></i>
+							<span>场站管理</span><span
+							class="label label-primary pull-right">2</span> </a>
+						<ul class="treeview-menu">
+							<li><a href="#"><i class="fa fa-circle-o"></i>场站信息管理</a></li>
+							<li><a href="#"><i class="fa fa-circle-o"></i>场站设备绑定</a></li>
+						</ul></li>
+					<li class="treeview"><a href="#"><i class="fa fa-files-o"></i>
+							<span>设备管理</span><span
+							class="label label-primary pull-right">2</span> </a>
+						<ul class="treeview-menu">
+							<li><a href="pages/layout/top-nav.html"><i
+									class="fa fa-circle-o"></i>设备基础信息维护</a></li>
+							<li><a href="pages/layout/boxed.html"><i
+									class="fa fa-circle-o"></i>车辆设备绑定</a></li>
+						</ul></li>
+					<li class="treeview active"><a href="#"><i class="fa fa-files-o"></i>
+							<span>车辆管理</span><span
+							class="label label-primary pull-right">1</span> </a>
+						<ul class="treeview-menu">
+							<li class="active"><a href="pages/layout/top-nav.html"><i
+									class="fa fa-circle-o"></i>车辆基础信息维护</a></li>
+						</ul>
+					</li>
+					<li><a href="pages/widgets.html"><i class="fa fa-th"></i>
+							<span>车辆状态监控</span><small class="label pull-right bg-green">new</small>
+					</a>
+					</li>
+					<!-- 
+					<li class="treeview"><a href="#"><i class="fa fa-laptop"></i>
+							<span>系统管理</span><i class="fa fa-angle-left pull-right"></i>
+					</a>
+						<ul class="treeview-menu">
+							<li><a href="pages/UI/general.html"><i
+									class="fa fa-circle-o"></i> General</a></li>
+							<li><a href="pages/UI/icons.html"><i
+									class="fa fa-circle-o"></i> Icons</a></li>
+							<li><a href="pages/UI/buttons.html"><i
+									class="fa fa-circle-o"></i> Buttons</a></li>
+							<li><a href="pages/UI/sliders.html"><i
+									class="fa fa-circle-o"></i> Sliders</a></li>
+							<li><a href="pages/UI/timeline.html"><i
+									class="fa fa-circle-o"></i> Timeline</a></li>
+							<li><a href="pages/UI/modals.html"><i
+									class="fa fa-circle-o"></i> Modals</a></li>
+						</ul></li>-->
+					<!-- menu items end -->
+				</ul>
+			</div>
+			<!-- /.sidebar -->
+		</aside>
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<h1>
+					川A97568运行监控 
+				</h1>
+				<ol class="breadcrumb">
+					<li><a href="${contextPath}/analysisadmin/analysis/index.html"><i class="fa fa-dashboard"></i> 首页</a></li>
+					<li class="active">设备车辆监控</li>
+				</ol>
+			</div>
+			<!--  
+			<div class="pad no-print">
+				<div class="callout callout-info"
+					style="margin-bottom: 0 !important;">
+					<h4>
+						<i class="fa fa-info"></i>
+					</h4>
+					
+				</div>
+			</div>
+			-->
+			<!-- Main content -->
+			<div class="content body">
+				<!-- page main content start -->
+                  <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    			
+    			  <div id="allmap"></div>
+				<!-- page main content stop -->
+			</div>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<footer class="main-footer">
+			<@howard.m "page.main.footer"/>
+		</footer>
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- jQuery 2.1.4 -->
+	<script
+		src="${contextPath}/assets/thirdParty/js/jquery/resources/jQuery-2.1.4.min.js"></script>
+	<!-- Bootstrap 3.3.2 JS -->
+	<script
+		src="${contextPath}/assets/thirdParty/bootstrap/bootstrap-3.3.5/js/bootstrap.min.js"
+		type="text/javascript"></script>
+	<!-- FastClick -->
+	<script
+		src='${contextPath}/assets/thirdParty/js/jquery/plugins/fastclick/fastclick.min.js'></script>
+	<!-- AdminLTE App -->
+	<script src="${contextPath}/assets/thirdParty/js/app.js"
+		type="text/javascript"></script>
+	<!-- SlimScroll 1.3.0 -->
+	<script
+		src="${contextPath}/assets/thirdParty/js/jquery/plugins/slimScroll/jquery.slimscroll.min.js"
+		type="text/javascript"></script>
+	<!-- 添加百度地图API AK G7MHOzoRhSGrTYNra76XcMd3 -->
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=G7MHOzoRhSGrTYNra76XcMd3"></script>
+	<script async src="http://c.cnzz.com/core.php"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+var i=0;
+$(window).load(function() {
+	$("#loading").delay(2000).fadeOut(500);
+	
+});
+var map = new BMap.Map("allmap");
+var point = new BMap.Point(116.331398,39.897445);
+map.centerAndZoom(point,12);
+var geolocation = new BMap.Geolocation();
+geolocation.getCurrentPosition(function(r){
+	if(this.getStatus() == BMAP_STATUS_SUCCESS){
+		var mk = new BMap.Marker(r.point);
+	
+		map.panTo(r.point);
+	}
+	else {
+		
+	}        
+},{enableHighAccuracy: true});
+function myFun(result){
+	var cityName = result.name;
+	map.setCenter(cityName);
+	var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例尺
+	var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
+	var top_right_navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL}); //右上角，仅包含平移和缩放按钮
+	/*缩放控件type有四种类型:
+	BMAP_NAVIGATION_CONTROL_SMALL：仅包含平移和缩放按钮；BMAP_NAVIGATION_CONTROL_PAN:仅包含平移按钮；BMAP_NAVIGATION_CONTROL_ZOOM：仅包含缩放按钮*/
+	//添加控件和比例尺
+	var overView = new BMap.OverviewMapControl();
+	var overViewOpen = new BMap.OverviewMapControl({isOpen:true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT});
+	//启用滚轮放大缩小
+	map.enableScrollWheelZoom(true);
+	map.addControl(top_left_control);        
+	map.addControl(top_left_navigation);     
+	map.addControl(top_right_navigation); 
+	map.addControl(overView);          //添加默认缩略地图控件
+	map.addControl(overViewOpen);      //右下角，打开
+}
+var myCity = new BMap.LocalCity();
+myCity.get(myFun);
+//复杂的自定义覆盖物
+function ComplexCustomOverlay(point, text, mouseoverText){
+  this._point = point;
+  this._text = text;
+  this._overText = mouseoverText;
+}
+ComplexCustomOverlay.prototype = new BMap.Overlay();
+ComplexCustomOverlay.prototype.initialize = function(map){
+  this._map = map;
+  var div = this._div = document.createElement("div");
+  div.style.position = "absolute";
+  div.style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
+  div.style.backgroundColor = "#1a2226";
+  div.style.border = "1px solid #1e282c";
+  div.style.color = "white";
+  //div.style.height = "18px";
+  div.style.padding = "2px";
+  div.style.lineHeight = "18px";
+  div.style.whiteSpace = "nowrap";
+  div.style.MozUserSelect = "none";
+  div.style.fontSize = "12px"
+  var span = this._span = document.createElement("span");
+  div.appendChild(span);
+  span.appendChild(document.createTextNode(this._text));      
+  var that = this;
+
+  var arrow = this._arrow = document.createElement("div");
+  arrow.style.background = "url(${contextPath}/assets/images/index/label.png) no-repeat";
+  arrow.style.position = "absolute";
+  arrow.style.width = "11px";
+  arrow.style.height = "10px";
+  arrow.style.top = "22px";
+  arrow.style.left = "10px";
+  arrow.style.overflow = "hidden";
+  div.appendChild(arrow);
+ 
+  div.onmouseover = function(){
+    this.style.backgroundColor = "#6BADCA";
+    this.style.borderColor = "#0000ff";
+    this.getElementsByTagName("span")[0].innerHTML = that._overText;
+    arrow.style.backgroundPosition = "0px -20px";
+  }
+
+  div.onmouseout = function(){
+    this.style.backgroundColor = "#1a2226";
+    this.style.borderColor = "#1e282c";
+    this.getElementsByTagName("span")[0].innerHTML = that._text;
+    arrow.style.backgroundPosition = "0px 0px";
+  }
+
+  map.getPanes().labelPane.appendChild(div);
+  
+  return div;
+}
+ComplexCustomOverlay.prototype.draw = function(){
+  var map = this._map;
+  var pixel = map.pointToOverlayPixel(this._point);
+  this._div.style.left = pixel.x - parseInt(this._arrow.style.left) + "px";
+  this._div.style.top  = pixel.y - 30 + "px";
+}
+map.addOverlay(new ComplexCustomOverlay(new BMap.Point(104.023845,30.756123), "四川华西绿舍建材有限公司金牛搅拌站","四川省成都市金牛区海霸王路"));
+
+//路书
+var points=[
+new BMap.Point(104.026257, 30.763964),
+new BMap.Point(104.02615, 30.763894 ),
+new BMap.Point(104.025952, 30.763809),
+new BMap.Point(104.025647, 30.763723),
+new BMap.Point(104.025408, 30.763704),
+new BMap.Point(104.02495, 30.763409 ),
+new BMap.Point(104.024483, 30.763281),
+new BMap.Point(104.024344, 30.763235),
+new BMap.Point(104.023985, 30.763149),
+new BMap.Point(104.024065, 30.762967),
+new BMap.Point(104.02385, 30.762583 ),
+new BMap.Point(104.023823, 30.762521),
+new BMap.Point(104.023958, 30.76244 ),
+new BMap.Point(104.024034, 30.762362),
+new BMap.Point(104.024164, 30.762215),
+new BMap.Point(104.024335, 30.762106),
+new BMap.Point(104.02447, 30.762005 ),
+new BMap.Point(104.024268, 30.761854),
+new BMap.Point(104.024169, 30.761412),
+new BMap.Point(104.024663, 30.761307),
+new BMap.Point(104.02469, 30.761225 ),
+new BMap.Point(104.024883, 30.761086),
+new BMap.Point(104.024982, 30.761012),
+new BMap.Point(104.025108, 30.760919),
+new BMap.Point(104.02517, 30.760884 ),
+new BMap.Point(104.025265, 30.760841),
+new BMap.Point(104.02531, 30.760783 ),
+new BMap.Point(104.025355, 30.76076 ),
+new BMap.Point(104.025471, 30.760644),
+new BMap.Point(104.025548, 30.760562),
+new BMap.Point(104.025736, 30.76038 ),
+new BMap.Point(104.025777, 30.760349),
+new BMap.Point(104.025831, 30.760302),
+new BMap.Point(104.025903, 30.760225),
+new BMap.Point(104.026001, 30.760155),
+new BMap.Point(104.026028, 30.76012 ),
+new BMap.Point(104.026087, 30.760077),
+new BMap.Point(104.026181, 30.759941),
+new BMap.Point(104.02628, 30.759798 ),
+new BMap.Point(104.026433, 30.759701),
+new BMap.Point(104.027165, 30.759616),
+new BMap.Point(104.027394, 30.759697),
+new BMap.Point(104.027569, 30.760007),
+new BMap.Point(104.027713, 30.759953),
+new BMap.Point(104.027771, 30.759856),
+new BMap.Point(104.027856, 30.759612),
+new BMap.Point(104.027924, 30.759488),
+new BMap.Point(104.027955, 30.759414),
+new BMap.Point(104.027987, 30.759352),
+new BMap.Point(104.027978, 30.759282),
+new BMap.Point(104.027969, 30.759228),
+new BMap.Point(104.027933, 30.759119),
+new BMap.Point(104.02774, 30.758894 ),
+new BMap.Point(104.027668, 30.758863),
+new BMap.Point(104.027632, 30.758848),
+new BMap.Point(104.027551, 30.758813),
+new BMap.Point(104.02747, 30.758766 ),
+new BMap.Point(104.027389, 30.758731),
+new BMap.Point(104.026504, 30.758572),
+new BMap.Point(104.026302, 30.758584),
+new BMap.Point(104.026096, 30.758599),
+new BMap.Point(104.025943, 30.758549),
+new BMap.Point(104.025373, 30.758219),
+new BMap.Point(104.025355, 30.758169),
+new BMap.Point(104.025346, 30.758157),
+new BMap.Point(104.025314, 30.758118),
+new BMap.Point(104.025265, 30.758072),
+new BMap.Point(104.02522, 30.758002 ),
+new BMap.Point(104.024977, 30.757777),
+new BMap.Point(104.02464, 30.757668 ),
+new BMap.Point(104.024461, 30.75768 ),
+new BMap.Point(104.024236, 30.75768 ),
+new BMap.Point(104.024039, 30.757637),
+new BMap.Point(104.02394, 30.757606 ),
+new BMap.Point(104.023706, 30.757564),
+new BMap.Point(104.023706, 30.757455),
+new BMap.Point(104.023729, 30.75704 ),
+new BMap.Point(104.023738, 30.757009),
+new BMap.Point(104.02376, 30.756931 ),
+new BMap.Point(104.02376, 30.756885 ),
+new BMap.Point(104.02376, 30.756834 ),
+new BMap.Point(104.02376, 30.75678  ),
+new BMap.Point(104.023594, 30.756761),
+new BMap.Point(104.023661, 30.756621),
+new BMap.Point(104.02389, 30.756776 ),
+new BMap.Point(104.0242, 30.756757  ),
+new BMap.Point(104.024236, 30.756698),
+new BMap.Point(104.024142, 30.756574),
+new BMap.Point(104.02403, 30.756501 ),
+new BMap.Point(104.023904, 30.756473),
+new BMap.Point(104.023783, 30.756481),
+new BMap.Point(104.023724, 30.75645 ),
+new BMap.Point(104.023769, 30.756396),
+new BMap.Point(104.02376, 30.756353)
+];
+map.addOverlay(new BMap.Polyline(points, {strokeColor: '#CD0000'}));
+map.setViewport(points);
+lushu = new BMapLib.LuShu(map,points,{
+	autoView:true,
+	icon  : new BMap.Icon('http://developer.baidu.com/map/jsdemo/img/car.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)}),
+	speed: 100,
+	defaultContent : "重量23.50吨",
+	enableRotation:true//是否设置marker随着道路的走向进行旋转
+}); 
+lushu.start();
+</script>

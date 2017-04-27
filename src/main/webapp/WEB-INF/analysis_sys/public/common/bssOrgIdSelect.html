@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<title></title>
+<link href="${contextPath}/assets/thirdParty/bssOrgId/css/jb51.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+
+	<!-- 代码部分begin -->
+	<header class="fixed">
+		<div class="header">机构选择</div>
+	</header>
+	<div id="letter"></div>
+	<div class="sort_box" id="insertLocation">
+		
+	</div>
+	<div class="initials">
+		<ul>
+			<li></li>
+		</ul>
+	</div>
+	<script
+		src="${contextPath}/assets/thirdParty/js/jquery/resources/jQuery-2.1.4.min.js"></script>
+	<script type="text/javascript"  src="${contextPath}/assets/thirdParty/bssOrgId/js/jquery.charfirst.pinyin.js"></script>
+	<script type="text/javascript"  src="${contextPath}/assets/thirdParty/bssOrgId/js/sort.js"></script>
+	
+	<script
+		src="${contextPath}/assets/thirdParty/json/jquery.json.js"></script>
+	<script type="text/javascript" src="${contextPath}/assets/thirdParty/public/publicMethod.js"></script>
+    <script type="text/javascript" src="${contextPath}/assets/thirdParty/public/calculateScreenSize.js"></script>
+	<!-- 代码部分end -->
+	
+<script type="text/javascript">
+<#include "systemAjaxUrl.html"> 
+
+	$(document).ready(function() {
+		
+		describe();
+	});
+
+
+	function describe(){ 
+		publicAjaxRequest(system_url.stationLocationInformationDisplay, "", "", "", "",
+			_structureItemsOnMap, null);
+	}
+	function _structureItemsOnMap(data){
+		console.log(data);
+		var stationLocationBean = data.stationLocationBean;
+		var _inserthtml="";
+		/* for(i=0;i<=stationLocationBean.length;i++){
+			var stationLocationBeanItem = stationLocationBean[i];
+			var xx = JSON.stringify(stationLocationBeanItem)
+			console.log(stationLocationBeanItem); 
+			var bssOrgIdItem = stationLocationBeanItem.bssOrgId;
+			_inserthtml+='<div class="sort_list">'
+				+'<div class="num_logo">'
+				+'<img src="images/img.png" />'	
+				+'</div>'		
+				+'<div class="num_name">'+bssOrgIdItem+'</div>'		
+				+'</div>'	
+		} */
+		$.each(data.stationLocationBean, function(i, item) {
+			var bssOrgId =item.bssOrgId;
+			var bssOrgName=item.bssOrgName;
+			_inserthtml+='<div class="sort_list" onclick="openNewWindow(this)" id="'+bssOrgId+'" >'
+				+'<div class="num_logo">'
+				+'<img  />'	
+				+'</div>'		
+				+'<div class="num_name" id="'+bssOrgId+'">'+bssOrgName+'</div>'		
+				+'</div>'
+		});
+		$("#insertLocation").html(_inserthtml);
+	}
+	function openNewWindow(obj){
+		var id = $(obj).attr("id");
+	}
+
+</script>
+</body>
+</html>

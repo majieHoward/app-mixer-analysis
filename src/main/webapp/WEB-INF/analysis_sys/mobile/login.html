@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>手机系统登录页面</title>
+<meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" name="viewport" />
+<!--bootstarp-->
+<link rel="stylesheet" type="text/css" href="${contextPath}/assets/thirdParty/bootstrap/bootstrap-3.3.5/css/bootstrap.min.css" />
+<!-- jquery-confirm files -->
+<link rel="stylesheet" type="text/css" href="${contextPath}/assets/thirdParty/js/jquery/plugins/jqueryconfirm/jquery-confirm.min.css" />
+<!--加载样式-->
+<link type="text/css" rel="stylesheet" href="${contextPath}/assets/css/mobile/css/basic.css" />
+</head>
+<body>
+<div class="w">
+  <!--header 开始-->
+  <header>
+      <div align="center">
+      <img src="${contextPath}/assets/css/mobile/images/logo1.png" width="200" height="200"/>
+      </div>
+  </header>
+  <!--header 结束-->
+  <div class="page">
+    <div class="main"  id="userLoginParameters" name="userLoginParameters">
+      <form id="frm_login" method="post" action="">
+        <div class="item item-username">
+          <input class="txt-input txt-username" type="text" value=""name="userName" id="userName" placeholder="<@howard.m "login1.input.username.placeholder"/>"/>
+          <b class="input-close" style="display: none;"></b> </div>
+        <div class="item item-password">
+          <input  class="txt-input txt-password ciphertext"  style="display: inline;" name="passWord" id="passWord" type="password" placeholder="<@howard.m "login1.input.password.placeholder"/>"/>
+         </div>
+        <div class="ui-btn-wrap"> 
+        
+        <a class="ui-btn-lg ui-btn-primary" href="#" name="executeLogin" id="executeLogin">登录</a> 
+        
+        </div>
+      </form>    
+      <div align="right">
+      <img src="${contextPath}/assets/css/mobile/images/logo.png" height="20"/>
+      </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
+<!-- jQuery 2.1.4 -->
+<script src="${contextPath}/assets/thirdParty/js/jquery/resources/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="${contextPath}/assets/thirdParty/js/jquery/plugs/jquery.placeholder.min.js"> </script>
+<!-- jquery-confirm files -->
+<script type="text/javascript" src="${contextPath}/assets/thirdParty/js/jquery/plugins/jqueryconfirm/jquery-confirm.min.js"></script>
+<script type="text/javascript" >
+$(function() {
+	$('input, textarea').placeholder();
+	bindingEvents();
+});
+function bindingEvents(){
+    document.onkeydown = function(e){    
+		var ev = document.all ? window.event : e;  
+		if(ev.keyCode==13) {
+			loginTheSystem();
+		}  
+	};  
+	$("#executeLogin").unbind('click').click(function() {
+		loginTheSystem();
+	});
+}
+function loginTheSystem(){
+    if(valueJudgment){
+	    verifyTheLoginInformation();
+	}else{
+		var validationResults = new Object();  
+		validationResults.msg = "<@howard.m "login1.judgment.value1"/>"; 
+		popUpLoginPrompt(validationResults);		
+	}
+}
+function verifyTheLoginInformation(){
+	$.ajax({
+		type: "GET",
+		url: "${contextPath}/analysisadmin/analysis/doLogin.html",
+		data: {
+			userName:$("#userName").val(), 
+			passWord:$("#passWord").val()
+		},
+		dataType: "json",
+		success: function(data){
+			console.log(data);	
+			var isSuccess=data.success;
+			if(isSuccess==true||isSuccess=="true"){
+			    window.location.href="${contextPath}/analysisadmin/analysis/mobile/index.html"
+			}else{
+			    //输入账号或密码错误
+				popUpLoginPrompt(data);
+			}			
+		}
+	});
+}
+function popUpLoginPrompt(data){
+	$.confirm({
+		title: '输入账号或密码错误',
+		content: data.msg,
+		autoClose: 'confirm|3000',
+		confirmButtonClass: 'btn-danger',
+		confirmButton: '确定',
+		cancelButton: '取消',
+		confirm: function(){
+			resetLoginParameters();
+		},
+		cancel: function(){
+			resetLoginParameters();
+		}
+	});
+}
+function resetLoginParameters(){
+    $("#userLoginParameters input").each(function(){
+		$(this).attr("value",'');
+	});
+}
+function valueJudgment(){
+    var markPosition=true;
+	$("#userLoginParameters input").each(function(){
+		if($(this).val()==''){
+		    markPosition=false;
+		}
+	});
+	return markPosition;
+}
+</script> 

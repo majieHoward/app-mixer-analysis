@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	<!-- add by howard at 2016.01.15 -->
+	<!--认证过滤器 anon authcBasic auchc user -->
+	<bean id="frameworkFormAuthenticationFilter"
+		class="com.howard.www.core.web.security.authorizing.authorization.filter.FrameworkFormAuthenticationFilter" />
+	<bean id="frameworkAnonymousFilter"
+		class="com.howard.www.core.web.security.authorizing.authorization.filter.FrameworkAnonymousFilter"></bean>
+	<!--授权过滤器 perms roles ssl rest port -->
+	<bean id="permissionsAuthorizationFilter"
+		class="com.howard.www.core.web.security.authorizing.authentication.filter.FrameworkPermissionsAuthorizationFilter"></bean>
+	<bean id="rolesAuthorizationFilter"
+		class="com.howard.www.core.web.security.authorizing.authentication.filter.FrameworkRolesAuthorizationFilter"></bean>
+	<bean id="concurrentSessionNumberFilter"
+		class="com.howard.www.core.web.security.authorizing.authentication.filter.FrameworkConcurrentSessionNumberFilter">
+		<property name="frameworkRedisCacheManager" ref="frameworkRedisCacheManager"></property>
+		<property name="sessionManager" ref="sessionManager"></property>
+	</bean>
+	<bean id="frameworkLoginStatusFilter"
+		class="com.howard.www.core.web.security.authorizing.authentication.filter.FrameworkLoginStatusFilter">
+		<property name="pageWithALoginStatus" value="/analysisadmin/analysis/kickout.html"></property>
+	</bean>
+	<!-- add by howard at 2016.01.04 -->
+	<!-- 在其中个开启是否每次都要去重新加载用户的权限和角色信息 -->
+	<bean id="systemAuthorizingRealm"
+		class="com.howard.www.core.web.security.authorizing.SystemAuthorizingRealm"></bean>
+	<!-- Authc indicates the need for authentication (login) to be used, no 
+		parameters -->
+	<bean id="chainDefinitionSectionMetaSource"
+		class="com.howard.www.core.web.security.authorizing.service.impl.ChainDefinitionSectionMetaSource">
+	</bean>
+	<bean id="frameworkShiroFilerChainManager"
+		class="com.howard.www.core.web.security.service.impl.FrameworkShiroFilerChainManager"></bean>
+	<import resource="application-shiro-cache.xml" />
+	<import resource="application-shiro-context.xml" />
+</beans>

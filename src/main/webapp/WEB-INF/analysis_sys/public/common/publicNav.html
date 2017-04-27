@@ -1,0 +1,32 @@
+<!-- menu items start -->
+<#if menuItem??>
+<#list menuItem as item>  
+    <li>
+        <a href="
+        <#if item.menuPathOfURI != "#">
+         ${contextPath}/${item.menuPathOfURI}
+        <#else>
+         #
+        </#if>
+        ">
+        <i class="fa fa-th"></i>
+		<span>${item.menuText} </span>
+			<#if (item.childOfMenu?size>0) >
+				<small class="label pull-right bg-green">${item.childOfMenu?size}</small>
+			<#else>
+	         
+	        </#if>
+	    </a>
+	    
+		<#if (item.childOfMenu?size>0) >
+		    <ul class="treeview-menu">
+		        <#list item.childOfMenu as childItem>  
+				<li><a href="${contextPath}/${childItem.menuPathOfURI} "><i
+						class="fa fa-circle-o"></i>${childItem.menuText}</a></li>
+			    </#list>
+			</ul>
+		</#if>
+	</li>
+</#list>
+</#if>
+<!-- menu items end -->

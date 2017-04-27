@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	<!-- add by howard at 2016.01.08 read certificate file Get public key private 
+		key -->
+	<bean id="initializePublicPrivatekeyFromFile"
+		class="com.howard.www.core.web.startup.certificate.service.impl.InitializePublicPrivatekeyFromFileServiceImpl">
+		<property name="folderOfHaveCertificate">
+			<value>config/certificate</value>
+		</property>
+		<property name="postfixOfCertificate">
+			<value>.p12</value>
+		</property>
+	</bean>
+	<!-- add by howard at 2016.01.09 Read application-initialization.xml configuration 
+		file -->
+	<bean id="initializeSystemStartUpConfig"
+		class="com.howard.www.core.web.startup.certificate.service.impl.InitializeSystemStartUpConfigServiceImpl">
+		<property name="bootConfigurationFilePath">
+			<value>config/initialization/application-initialization.xml</value>
+		</property>
+	</bean>
+</beans>

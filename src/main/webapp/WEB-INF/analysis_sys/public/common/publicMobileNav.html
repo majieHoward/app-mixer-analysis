@@ -1,0 +1,21 @@
+<!-- menu items start -->
+<#if menuItem??>
+<#list menuItem as item>  
+    <li 
+        <#if item.menuPathOfURI != "#">
+        class="gotoPageUrl" gotoPageUrl="${contextPath}/${item.menuPathOfURI}">
+        <#else>
+         >
+        </#if>
+        <span>${item.menuText}</span>
+		<#if (item.childOfMenu?size>0) >
+		     <ul>
+		        <#list item.childOfMenu as childItem>  
+				<li class="gotoPageUrl" gotoPageUrl="${contextPath}/${childItem.menuPathOfURI}"><span>${childItem.menuText}</span></li>
+			    </#list>
+			</ul>
+        </#if>
+	</li>
+</#list>
+</#if>
+<!-- menu items end -->

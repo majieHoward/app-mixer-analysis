@@ -1,0 +1,23 @@
+var workTravelCarSelectShowUrl='${contextPath}/analysisadmin/analysis/travelShow/travelShowInfoItems.html?carId=${carId}';
+var workTravelCarSelectShowColModel = [
+{name : 'operId',label : '操作流水号',index : 'operId',align : 'left',hidden : false}, 
+{name : 'deviceId',label : '设备编号',index : 'deviceId',align : 'left',hidden : false}, 
+{name : 'longitude',label : '经度',index : 'longitude',align : 'left',widtn : '100px',hidden : false}, 
+{name : 'latitude',	label : '维度',	index : 'latitude',	align : 'left',	hidden : false}, 
+{name : 'weightOne',	label : '',	index : 'weightOne',	align : 'left',	hidden : false},
+{name : 'dateOne',	label : '',	index : 'dateOne',	align : 'left',	hidden : false},
+{name : 'weigthTwo',	label : '',	index : 'weigthTwo',	align : 'left',	hidden : false},
+{name : 'dateTwo',	label : '',	index : 'dateTwo',	align : 'left',	hidden : false},
+{name : 'weigthDiff',	label : '重量差值',	index : 'weigthDiff',	align : 'left',	hidden : false},
+{name : 'nodeSign',	label : '节点标识',	index : 'nodeSign',	align : 'left',	hidden : false},
+{name : 'jbbs',	label : '上货/下货标识',	index : 'jbbs',	align : 'left',	hidden : false},
+{name : 'carId',label : '车辆编号',	index : 'carId',	align : 'left',	hidden : false}
+ ];
+ //构造表格中的数据
+function structureTravelCarSelectShowTable(tableWidth,tableHeigth){
+	loadTableItemsData("gridTableTravelCarSelectShow",
+			workTravelCarSelectShowUrl,
+			"gridPagerTravelCarSelectShow",
+			"TravelCarSelectShow", workTravelCarSelectShowColModel,
+			null,_selectedVehicle,"deviceId",tableWidth,tableHeigth);
+}

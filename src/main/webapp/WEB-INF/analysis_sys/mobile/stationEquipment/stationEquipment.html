@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title></title>
+<!-- Bootstrap 3.3.4 -->
+<link rel="stylesheet" type="text/css" href="${contextPath}/assets/thirdParty/js/jquerymobile/jquery.mobile-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/assets/thirdParty/scrollbar/scrollbar.css">
+<link type="text/css" rel="stylesheet"
+	href="${contextPath}/assets/thirdParty/mmenu-master/css/jquery.mmenu.all.css" />
+<#include "../../public/common/mobileStationEquipmentStyle.html"> 
+</head>
+<body>
+<!-- index展示 start -->
+<div id="pageIndex" style="display: none" class="page animated">
+    
+</div>
+<!-- index展示 end -->
+<!-- map展示start -->
+<div id="pageMap" style="display: none" class="page animated">
+	
+</div>
+</body>
+</html>
+<!-- jQuery 2.1.4 -->
+<script
+		src="${contextPath}/assets/thirdParty/js/jquery/resources/jQuery-2.1.4.min.js"></script>
+<script
+		src="${contextPath}/assets/thirdParty/js/jquerymobile/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="${contextPath}/assets/thirdParty/scrollbar/iscroll.js"></script>
+<script type="text/javascript" src="${contextPath}/assets/thirdParty/mmenu-master/js/jquery.mmenu.all.min.js"></script>
+<script type="text/javascript">
+var baseContextPath="${contextPath}";
+var itemPageTitle;
+var urlOfGotoPage;
+var parameters = new Object();
+var workTravelCarSelectShowUrl='${contextPath}/analysisadmin/analysis/stationEquipment/analysisStationRelationship.html?bssOrgId=${bssOrgId}';
+$(function() {
+    initPageParam();
+	loadStationEquipmentIndex();
+});
+function initPageParam(){
+	parameters.bssOrgId=${bssOrgId};
+	
+}
+function loadStationEquipmentIndex(){
+	changeScreeningShowPage("pageIndex","stationEquipmentIndex","stationEquipmentIndex","stationEquipment/stationEquipmentIndex.html");
+}
+<#include "../../public/common/changeScreeningShowPage.html"> 
+</script>
+

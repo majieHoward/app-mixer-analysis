@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	<!-- add by howard 2016.01.17 -->
+	<bean id="frameworkDefaultFilterChainManager"
+		class="com.howard.www.core.web.security.authorizing.authorization.filter.mgt.FrameworkDefaultFilterChainManager">
+		<!-- 要求登录时的链接 -->
+		<property name="loginUrl" value="/analysisadmin/analysis/login.html" />
+		<!-- 登陆成功后要跳转的连接 -->
+		<property name="successUrl" value="/" />
+		<!-- 没有权限要跳转的链接 -->
+		<property name="unauthorizedUrl" value="/analysisadmin/analysis/unauthorized.html" />
+		<!-- add by howard at 2015.01.15 -->
+		<property name="filters">
+			<map>
+				<entry key="frameworkanon" value-ref="frameworkAnonymousFilter"></entry>
+				<entry key="frameworkauthc" value-ref="frameworkFormAuthenticationFilter"></entry>
+				<entry key="frameworkperms" value-ref="permissionsAuthorizationFilter"></entry>
+				<entry key="frameworkroles" value-ref="rolesAuthorizationFilter"></entry>
+			    <entry key="frameworkkickout" value-ref="concurrentSessionNumberFilter"></entry>
+			    <entry key="frameworkLoginStatus" value-ref="frameworkLoginStatusFilter"></entry>
+			</map>
+		</property>
+		<property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" />
+	</bean>
+	<bean id="frameworkPathMatchingFilterChainResolver"
+		class="com.howard.www.core.web.security.authorizing.authorization.filter.mgt.FrameworkPathMatchingFilterChainResolver">
+		<!-- FrameworkDefaultFilterChainManager name is defaultFilterChainManagerBeanName -->
+		<property name="defaultFilterChainManagerBeanName">
+			<value>frameworkDefaultFilterChainManager</value>
+		</property>
+	</bean>
+	<bean id="authorizationListInit"
+		class="com.howard.www.core.web.security.authorizing.service.impl.AuthorizationListInitImpl">
+		<!-- FrameworkDefaultFilterChainManager name is defaultFilterChainManagerBeanName -->
+		<property name="defaultFilterChainManagerBeanName">
+			<value>frameworkDefaultFilterChainManager</value>
+		</property>
+	</bean>
+	<!-- Enable Shiro Annotations for Spring-configured beans. Only run after -->
+	<bean
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject" ref="shiroFilter" />
+		<property name="targetMethod" value="setFilterChainResolver" />
+		<property name="arguments" ref="frameworkPathMatchingFilterChainResolver" />
+	</bean>
+	<!-- the lifecycleBeanProcessor has run: -->
+	<!-- Shiro Life cycle processor -->
+	<bean id="systemLifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+</beans>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>设备信息详情</title>
+<meta
+	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+	name='viewport'>
+<!-- css-page-preload-animations -->
+<link href="${contextPath}/assets/thirdParty/pagePreloadAnimations/css/Icomoon/style.css"
+	rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/thirdParty/pagePreloadAnimations/css/main.css"
+	rel="stylesheet" type="text/css" />
+<!-- css-page-preload-animations -->
+<!-- Theme style -->
+<link href="${contextPath}/assets/css/AdminLTE/AdminLTE.css"
+	rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/css/AdminLTE/skins/skin-blue.min.css"
+	rel="stylesheet" type="text/css" />
+<!-- Bootstrap 3.3.4 -->
+<link
+	href="${contextPath}/assets/thirdParty/bootstrap/bootstrap-3.3.5/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/thirdParty/jqgrid/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css" />
+<!-- model -->
+<!--  <link
+	href="${contextPath}/assets/thirdParty/bootstrap/extend/modal/css/bootstrap-responsive.min.css"
+	rel="stylesheet" type="text/css" />-->
+<!-- Font Awesome Icons -->
+<link href="${contextPath}/assets/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css" />
+<!-- Ionicons -->
+<link href="${contextPath}/assets/css/ionicons.min.css" rel="stylesheet"
+	type="text/css" />
+<#include "../public/common/ieSupport.html"> 
+<#include "../public/common/loadingStyle.html"> 
+</head>
+<body class="skin-blue fixed" data-spy="scroll" data-target="#scrollspy"> 
+    <#include "../public/common/loadingHtml.html"> 
+	<!--  -->
+	<div class="wrapper">
+		<!-- page header start -->
+		<header class="main-header">
+			<!-- Logo -->
+			<#include "../public/common/logo.html"> 
+			<!-- Logo -->
+			<#include "../public/common/headerNavbar.html">
+		</header>
+		<!-- page header end -->
+		<!-- Left side column. contains the logo and sidebar -->
+		<aside class="main-sidebar">
+			<!-- sidebar: style can be found in sidebar.less -->
+			<div class="sidebar" id="scrollspy">
+				<!-- sidebar menu: : style can be found in sidebar.less -->
+				<ul class="nav sidebar-menu">
+					<li class="header"></li>
+					<!-- menu items start -->
+					<#include "../public/common/publicNav.html">
+					<!-- menu items end -->
+				</ul>
+			</div>
+			
+			<!-- /.sidebar -->
+		</aside>
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<h1>
+					设备信息详情
+				</h1>
+				<ol class="breadcrumb">
+					<li><a href="${contextPath}/analysisadmin/analysis/index.html"><i class="fa fa-dashboard"></i> 首页</a></li>
+					<li class="active">场站信息管理页面</li>
+				</ol>
+			</div>
+			<div class="pad no-print">
+				<div class="callout callout-info"
+					style="margin-bottom: 0 !important;">
+					<h4>
+						操作说明:
+					</h4>
+				</div>
+			</div>
+			<!-- Main content -->
+			<div class="content body" id="mainContent" name="mainContent">
+			   <div class="box">
+				  <div class="box-header"  style="padding: 0;border-left: 1px solid #ddd;border-right: 1px solid #ddd;background-color: #ededed;">
+						<p class="myself-buttongroup-p-margin">
+		                    <button class="btn bg-gray-active btn-xs myself-button-margin myself-btn-color" id="realTimePosition" name="realTimePosition">查看车辆实时位置</button>
+		                    <button class="btn bg-gray-active btn-xs myself-button-margin myself-btn-color" id="historicalJourney" name="historicalJourney">展示车辆历史行程</button>
+		                    <button class="btn bg-gray-active btn-xs myself-button-margin myself-btn-color" id="monthlyTrafficVolume" name="monthlyTrafficVolume">车辆当月运量</button>
+		                </p>
+					</div>
+					<!-- page main content start -->
+					<!-- carinfo table -->
+					<div class="widget-body" style="padding: 0; padding-top:0px">
+						<div id="divContainer" class="container collapse in"
+							style="margin: 0">
+						</div>
+						<div class="widget">
+							<table id="gridTableTravelCarSelectShow"></table>
+							<div id="gridPagerTravelCarSelectShow"></div>
+						</div>
+					</div>
+				</div>
+			<!-- carinfo table -->
+			<!--  -->
+			<!--  -->
+			<!-- page main content stop -->
+			</div>
+			<!-- /.content -->
+		</div>
+		</div>
+		<!-- /.content-wrapper -->
+		<#include "../public/common/footer.html"> 
+	<!-- ./wrapper -->
+</body>
+</html>
+	<!-- jQuery 2.1.4 -->
+	<script
+		src="${contextPath}/assets/thirdParty/js/jquery/resources/jQuery-2.1.4.min.js"></script>
+	<script
+		src="${contextPath}/assets/thirdParty/json/jquery.json.js"></script>
+	<!-- Bootstrap 3.3.5 JS -->
+	<script
+		src="${contextPath}/assets/thirdParty/bootstrap/bootstrap-3.3.5/js/bootstrap.min.js"
+		type="text/javascript"></script>
+	<!-- mode -->
+	<!-- FastClick -->
+	<script
+		src='${contextPath}/assets/thirdParty/js/jquery/plugins/fastclick/fastclick.min.js'></script>
+	<!-- AdminLTE App -->
+	<script src="${contextPath}/assets/thirdParty/js/app.js"
+		type="text/javascript"></script>
+	<!-- SlimScroll 1.3.0 -->
+	<script
+		src="${contextPath}/assets/thirdParty/js/jquery/plugins/slimScroll/jquery.slimscroll.min.js"
+		type="text/javascript"></script>
+    <#include "../public/common/baiduMap.html"> 
+	<script type="text/javascript" src="http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>
+	<!-- jqgrid start-->
+	<#include "../public/common/jqgridRelyOnJs.html"> 
+	<!-- jqgrid end-->
+	<#include "../public/common/layerSource.html"> 
+	<!-- bootbox -->
+	<script src="${contextPath}/assets/thirdParty/bootbox/bootbox.js"></script>
+	<!-- bootbox -->
+	<!-- 公用方法 -->
+    <script type="text/javascript" src="${contextPath}/assets/thirdParty/public/publicMethod.js"></script>
+    <script type="text/javascript" src="${contextPath}/assets/thirdParty/public/calculateScreenSize.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	bindingEvents();
+	var leftWidth=parseInt($('.widget').css('borderLeftWidth'));
+	var rightWidth=parseInt($('.widget').css('borderRightWidth'));
+	var tableWidth=_getElementWidthA(".widget")-leftWidth-rightWidth-2;
+	structureTravelCarSelectShowTable(tableWidth,300);
+});
+$(function(){
+   $("#loading").delay(2000).fadeOut(500);
+   _selfgridComplete();
+});
+//构造表格中的数据
+function structureTravelCarSelectShowTable(tableWidth,tableHeight){
+	loadTableItemsData("gridTableTravelCarSelectShow",
+			workTravelCarSelectShowUrl,
+			"gridPagerTravelCarSelectShow",
+			"TravelCarSelectShow", workTravelCarSelectShowColModel,
+			null,_selectedVehicle,"deviceId",tableWidth,tableHeight,_selfgridComplete);
+}
+/**
+* 表格数据加载完成执行
+*/
+function _selfgridComplete(){
+    console.log("_selfgridComplete $('body').scrollTop()="+$("body").scrollTop());
+    //查看是否存在滚动条
+    $("body").scrollTop(10);//控制滚动条下移10px  
+    if( $("body").scrollTop()>0 ){  
+        //如果有滚动条
+        var leftWidth=parseInt($('.widget').css('borderLeftWidth'));
+		var rightWidth=parseInt($('.widget').css('borderRightWidth'));
+		var paddingRight=parseInt($("#mainContent").css('padding-right'));
+		var tableWidth=_getElementWidthA(".widget")-leftWidth-rightWidth-paddingRight;
+		console.log(tableWidth);
+ 	     $("#gbox_gridTableTravelCarSelectShow").width(tableWidth);
+ 	    $("#gview_gridTableTravelCarSelectShow").width(tableWidth);
+		$("#gridTableTravelCarSelectShow").width(tableWidth);
+ 	}else{  
+        //如果没有滚动条
+    } 
+    $("body").scrollTop(0);//滚动条返回顶部  
+}
+var workTravelCarSelectShowUrl='${contextPath}/analysisadmin/analysis/stationEquipment/analysisStationRelationship.html?bssOrgId=${bssOrgId}';
+var workTravelCarSelectShowColModel = [
+{name : 'bssOrg',label : '',index : 'bssOrg',align : 'left',hidden : true}, 
+{name : 'bssOrgName',label : '',index : 'bssOrgName',align : 'left',hidden : true}, 
+ {name : 'carId',label : '汽车编号',index : 'carId',align : 'left',widtn : '100px',hidden : false}, 
+ {	name : 'carNbr',	label : '车牌号',	index : 'carNbr',	align : 'left',	hidden : false}, 
+ {	name : 'carState',	label : '',	index : 'carState',	align : 'left',	hidden : true},
+ {	name : 'latitude',	label : '场站纬度',	index : 'latitude',	align : 'left',	hidden : false},
+ {	name : 'longitude',	label : '场站经度',	index : 'longitude',	align : 'left',	hidden : false},
+ {	name : 'orgState',	label : '',	index : 'orgState',	align : 'left',	hidden : true},
+ {	name : 'serialId',	label : '设备编号',	index : 'serialId',	align : 'left',	hidden : false},
+ {	name : 'servId',	label : '设备ID',	index : 'servId',	align : 'left',	hidden : true},
+ {	name : 'state',	label : '',	index : 'state',	align : 'left',	hidden : true},
+ {name : 'addr',label : '所属公司',	index : 'addr',	align : 'left',	hidden : false}
+ ];
+function bindingEvents(){
+    //查看车辆实时位置
+    $("#realTimePosition").unbind('click').click(function(){
+	    handleRealTimePosition();
+	});
+	//查看车辆的历史行程
+    $("#historicalJourney").unbind('click').click(function(){
+	   handleHistoricalJourney();
+	});
+	//查看车辆当月运量
+	$("#monthlyTrafficVolume").unbind('click').click(function(){
+	   handleMonthlyTrafficVolume();
+	});
+	//打开机构选择页面
+	$("#openBssOrgIdWin").unbind('click').click(function(){
+		handleOpenBssorgId();
+	});
+}
+//查看车辆当月运量
+function handleMonthlyTrafficVolume(){
+   _obtainTableSelRowData(controlMonthlyTrafficVolume);
+}
+//处理车辆实时位置信息
+function handleRealTimePosition(){
+    _obtainTableSelRowData(controlForRealTimePosition);
+} 
+//打开机构选择页面
+function handleOpenBssorgId(){
+
+    controlOpenBssOrgId();
+} 
+
+function controlForRealTimePosition(data){
+    var carId=data.carId;
+    if(publicJudgmentObject(carId)==true){
+      //弹框调用在百度地图上展示车辆的实时位置
+	    var queryAreadyAssignedAgencyUrl="${contextPath}/analysisadmin/analysis/travelShow/travelShowMovingView.html?carId="+carId;
+	    openRealTimePositionWindow("车辆实时位置",queryAreadyAssignedAgencyUrl);
+    }
+}
+function controlMonthlyTrafficVolume(data){
+    var servId=data.servId;
+    var bssOrg=data.bssOrg;
+    if(publicJudgmentObject(servId)==true){
+      //弹框调用在百度地图上展示车辆的实时位置
+	    var queryAreadyAssignedAgencyUrl="${contextPath}/analysisadmin/analysis/dataStatistics/queryStatisticsLineChart.html?deviceId="+servId+"&bssOrgId="+bssOrg;
+	    openRealTimePositionWindow("运量统计图",queryAreadyAssignedAgencyUrl);
+    }
+}
+
+function controlOpenBssOrgId(){
+//    var servId=data.servId;
+//    var bssOrg=data.bssOrg;
+//    if(publicJudgmentObject(servId)==true){
+	    var queryAreadyAssignedAgencyUrl="${contextPath}/analysisadmin/analysis/public/common/bssOrgIdSelect.html"
+	    openRealTimePositionWindow("bssOrgId",queryAreadyAssignedAgencyUrl);
+//    }
+}
+
+//弹出百度地图
+function openRealTimePositionWindow(loadWindowTitle,urlOfRealTimeMonitoring){
+    var _winWidth=_screenSizefunctionA()*0.9+"px";
+    var _winHeight=_screenSizefunctionC()*0.9+"px";
+    _screenSizefunctionC()
+	layer.open({
+        type: 2,
+        title: loadWindowTitle,
+        fix: false,
+        shadeClose: true,
+        //maxmin: true,
+        area: [_winWidth, _winHeight],
+	    content: urlOfRealTimeMonitoring //这里content是一个DOM
+    });
+}
+//展示车辆历史行程
+function handleHistoricalJourney(){
+	_obtainTableSelRowData(controlForHistoricalJourney);
+} 
+function controlForHistoricalJourney(data){
+    //跳转到车辆历史行程的展示页面
+    //carId为车辆编号
+    var carId=data.carId;
+    window.location.href="${contextPath}/analysisadmin/analysis/travelShow/travelShow.html?carId="+carId;  
+}
+//点击表格中的某一行后显示出显示出当前车辆的实时位置
+function _selectedVehicle(rowId){
+    console.log(rowId);
+    //获取这一行的数据
+	 _obtainTableSelRowData(controlForRealTimePosition);
+	//
+	
+}
+function _obtainTableSelRowData(_controlFunc){
+    var rowData=obtainDataGridSelectRowData("gridTableTravelCarSelectShow");
+	console.log(rowData);
+	//判断是否有选中行如果没有选中行就报错提示
+	if(publicJudgmentObject(rowData)==true){
+		//如果有选中的行就调用回掉函数
+		_controlFunc(rowData);
+	}else{
+	    //提示错误信息
+	    layer.msg('请先选择要查看的车辆');
+	}
+}
+</script>
+  

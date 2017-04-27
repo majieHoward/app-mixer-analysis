@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="author" content="www.frebsite.nl" />
+<meta name="viewport"
+	content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+<title>首页</title>
+<link type="text/css" rel="stylesheet"
+	href="${contextPath}/assets/thirdParty/mmenu-master/css/jquery.mmenu.all.css" />
+<#include "../public/common/mobileIndexStyle.html"> 
+</head>
+<body>
+<!-- index展示 start -->
+<div id="indexMain" style="display: none" class="page animated">
+    
+</div>
+<div id="indexOrgSelect" style="display: none" class="page animated">
+    
+</div>	
+</body>
+</html>
+<!-- jQuery 2.1.4 -->
+<script
+		src="${contextPath}/assets/thirdParty/js/jquery/resources/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="${contextPath}/assets/thirdParty/mmenu-master/js/jquery.mmenu.all.min.js"></script>
+<!-- 添加百度地图API AK G7MHOzoRhSGrTYNra76XcMd3 -->
+<#include "../public/common/baiduMap.html">
+<!-- 公用方法 -->
+<script type="text/javascript" src="${contextPath}/assets/thirdParty/public/publicMethod.js"></script>
+<script type="text/javascript" src="${contextPath}/assets/thirdParty/public/calculateScreenSize.js"></script>
+<script type="text/javascript">
+<#include "../public/common/systemAjaxUrl.html"> 
+var urlOfGotoPage;
+var baseContextPath="${contextPath}";
+var itemPageTitle;
+var parameters = new Object();
+$(function() {
+	loadStationEquipmentIndex();
+});
+function loadStationEquipmentIndex(){
+	changeScreeningShowPage("indexMain","indexMain","indexMain","indexMain.html");
+}
+<#include "../public/common/changeScreeningShowPage.html"> 
+</script>

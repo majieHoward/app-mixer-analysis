@@ -1,0 +1,29 @@
+function backPage(pageId){
+	var $allPage = $(".page");
+	var $page = $("#" + pageId);
+	$allPage.css("display", "none");
+	$page.css({'display':'block','visibility':'visible'});
+}
+function changeScreeningShowPage(pageId,nameOfJs,nameOfCss,urlOfPage) {
+	var $allPage = $(".page");
+	var $page = $("#" + pageId);
+	$allPage.css("display", "none");
+	var cssUrl = "${contextPath}/assets/css/mobile/css/"+nameOfCss+".css";
+	var jsUrl = "${contextPath}/assets/css/mobile/js/"+nameOfJs+".js";
+	var pageUrl= "${contextPath}/analysisadmin/analysis/mobile/"+urlOfPage;
+	$.get(pageUrl, {}, function(data) {
+		$page.empty().html(data);
+		$page.css({'display':'block','visibility':'visible'});
+		try {
+			$.getScript(jsUrl);
+			$("<link>").attr({
+				rel : "stylesheet",
+				type : "text/css",
+				href : cssUrl
+			}).appendTo("head");
+		} catch (e) {
+			
+		}
+           
+	});
+} 

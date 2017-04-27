@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>首页</title>
+<meta
+	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+	name='viewport'>
+<!-- css-page-preload-animations -->
+<link href="${contextPath}/assets/thirdParty/pagePreloadAnimations/css/Icomoon/style.css"
+	rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/thirdParty/pagePreloadAnimations/css/main.css"
+	rel="stylesheet" type="text/css" />
+<!-- css-page-preload-animations -->
+<!-- Theme style -->
+<link href="${contextPath}/assets/css/AdminLTE/AdminLTE.css"
+	rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/css/AdminLTE/skins/skin-blue.min.css"
+	rel="stylesheet" type="text/css" />
+<!-- Bootstrap 3.3.4 -->
+<link
+	href="${contextPath}/assets/thirdParty/bootstrap/bootstrap-3.3.5/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/thirdParty/jqgrid/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css" />
+<!-- model -->
+<!--  <link
+	href="${contextPath}/assets/thirdParty/bootstrap/extend/modal/css/bootstrap-responsive.min.css"
+	rel="stylesheet" type="text/css" />-->
+<!-- Font Awesome Icons -->
+<link href="${contextPath}/assets/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css" />
+<!-- Ionicons -->
+<link href="${contextPath}/assets/css/ionicons.min.css" rel="stylesheet"
+	type="text/css" />
+<#include "../public/common/ieSupport.html"> 
+<#include "../public/common/loadingStyle.html"> 
+</head>
+<body> 
+<!--  -->
+	<!--  -->
+<!-- info start -->
+<div class="box">
+  <div class="box-header"  style="padding: 0;border-left: 1px solid #ddd;border-right: 1px solid #ddd;background-color: #ededed;">
+         <p class="myself-buttongroup-p-margin">
+         <button class="btn bg-gray-active btn-xs  myself-button-margin myself-btn-color"  id="startStroke" name="startStroke">展示车辆行程路线</button>
+	     </p>
+	</div>
+	<!-- page main content start -->
+	<!-- carinfo table -->
+	<div class="widget-body" style="padding: 0; padding-top:0px">
+		<div id="divContainer" class="container collapse in"
+			style="margin: 0">
+		</div>
+		<div class="widget">
+			<table id="gridTableTravelCarSelectShow"></table>
+			<div id="gridPagerTravelCarSelectShow"></div>
+		</div>
+	</div>
+</div>
+<!-- info end -->
+<!-- /.content-wrapper -->
+<!-- ./wrapper -->
+
+	<!-- jQuery 2.1.4 -->
+	<script
+		src="${contextPath}/assets/thirdParty/js/jquery/resources/jQuery-2.1.4.min.js"></script>
+	<script
+		src="${contextPath}/assets/thirdParty/json/jquery.json.js"></script>
+	<!-- Bootstrap 3.3.5 JS -->
+	<script
+		src="${contextPath}/assets/thirdParty/bootstrap/bootstrap-3.3.5/js/bootstrap.min.js"
+		type="text/javascript"></script>
+	<!-- mode -->
+	<!-- FastClick -->
+	<script
+		src='${contextPath}/assets/thirdParty/js/jquery/plugins/fastclick/fastclick.min.js'></script>
+	<!-- AdminLTE App -->
+	<script src="${contextPath}/assets/thirdParty/js/app.js"
+		type="text/javascript"></script>
+	<!-- SlimScroll 1.3.0 -->
+	<script
+		src="${contextPath}/assets/thirdParty/js/jquery/plugins/slimScroll/jquery.slimscroll.min.js"
+		type="text/javascript"></script>
+    <#include "../public/common/baiduMap.html"> 
+	<script type="text/javascript" src="http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>
+	<!-- jqgrid start-->
+	<#include "../public/common/jqgridRelyOnJs.html"> 
+	<!-- jqgrid end-->
+	<#include "../public/common/layerSource.html"> 
+	<!-- bootbox -->
+	<script src="${contextPath}/assets/thirdParty/bootbox/bootbox.js"></script>
+	<!-- bootbox -->
+	<!-- 公用方法 -->
+    <script type="text/javascript" src="${contextPath}/assets/thirdParty/public/publicMethod.js"></script>
+    <script type="text/javascript" src="${contextPath}/assets/thirdParty/public/calculateScreenSize.js"></script>
+
+<script type="text/javascript">
+<#include "../public/common/systemAjaxUrl.html"> 
+$(document).ready(function() {
+    var tableWidth=_getElementWidthA(".widget");
+    structureTravelCarSelectShowTable(tableWidth,300);
+	bindingEvents();
+});
+//加载表格数据start
+<#include "../public/common/workTravelCarSelectShowTable.html"> 
+//加载表格数据end
+function _obtainTableSelRowData(_controlFunc){
+    var rowData=obtainDataGridSelectRowData("gridTableTravelCarSelectShow");
+	//判断是否有选中行如果没有选中行就报错提示
+	if(publicJudgmentObject(rowData)==true){
+		//如果有选中的行就调用回掉函数
+		_controlFunc(rowData);
+	}else{
+	    //弹出请先选中行
+	}
+}
+function _selectedVehicle(){
+ 	//获取这一行的数据
+	_obtainTableSelRowData(controlForShowTravelVehicle);
+}
+function bindingEvents(){
+ 	$("#startStroke").unbind('click').click(function(){
+        handleStartStroke();  
+	});
+} 
+function handleStartStroke(){
+    _obtainTableSelRowData(controlForShowTravelVehicle);
+}
+function controlForShowTravelVehicle(data){
+    var param={}
+	param.operId=data.operId;
+	param.carId=data.carId;
+	//查询当前operId对应的信息
+    window.parent._loadingOperPoint(param); 
+}
+function _obtainTableSelRowData(_controlFunc){
+    var rowData=obtainDataGridSelectRowData("gridTableTravelCarSelectShow");
+	//判断是否有选中行如果没有选中行就报错提示
+	if(publicJudgmentObject(rowData)==true){
+		//如果有选中的行就调用回掉函数
+		_controlFunc(rowData);
+		 closeTravelSelectItem();
+	}else{
+	    //弹出请先选中行
+	    //弹出请先选中行
+	    layer.msg('请先选择行程');
+	}
+}
+function closeTravelSelectItem(){
+    window.parent.closeTravelSelectItem(); 
+}
+</script>
+</body>
+</html>
+  

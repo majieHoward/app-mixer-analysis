@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+    http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>Archetype Created Web Application</display-name>
+	<!-- add by howard 2015.12.9 -->
+	<!-- execution sequence 1.context-param 2.listener 3.filter 4.servlet -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:config/application-context.xml</param-value>
+		<description></description>
+	</context-param>
+	<!-- add by howard 2015.12.16 tag::springSessionRepositoryFilter[] -->
+	<filter>
+		<filter-name>springSessionRepositoryFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSessionRepositoryFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- end::springSessionRepositoryFilter[] -->
+	
+	<!-- Spring Context listener -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- Spring The listener to prevent memory leaks -->
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.howard.www.common.web.listener.CodeTableLoadListener</listener-class>
+	</listener>
+	<!-- execution time filter add by howard at 2015.12.10 -->
+	<filter>
+		<filter-name>processTime</filter-name>
+		<filter-class>com.howard.www.common.web.ProcessTimeFilter</filter-class>
+	</filter>
+	<!-- Spring Encoding filter add by howard at 2015.12.10 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<!-- Regardless of whether the client request contains the encoding, all 
+			of the requests in the filter, encoding -->
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<!-- add by howard at 2016.01.04 -->
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>processTime</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- Xss script attack add by howard 2015.12.10 -->
+	<filter>
+		<filter-name>XssFilter</filter-name>
+		<filter-class>com.howard.www.common.web.XssFilter</filter-class>
+		<init-param>
+			<param-name>excludeUrls</param-name>
+			<param-value>/analysisadmin/analysis</param-value>
+		</init-param>
+		<init-param>
+			<param-name>SplitChar</param-name>
+			<param-value>@</param-value>
+		</init-param>
+		<init-param>
+			<param-name>FilterChar</param-name>
+			<param-value>'@"@\@#@:@%@></param-value>
+		</init-param>
+		<init-param>
+			<param-name>ReplaceChar</param-name>
+			<param-value>‘@“@＼@＃@：@％@＞</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>XssFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- Spring MVC setting add by howard 2015.12.10 -->
+	<!-- add by howard 2016.01.04 start::shiro config -->
+	<filter>
+		<filter-name>shiroFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>shiroFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- end::shiro filter config -->
+	<!-- Declare a Spring MVC DispatcherServlet as usual -->
+	<servlet>
+		<servlet-name>AnalysisAdmin</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>
+				classpath:config/analysis/analysis-servlet-admin.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AnalysisAdmin</servlet-name>
+		<url-pattern>/analysisadmin/analysis/*</url-pattern>
+	</servlet-mapping>
+	<!-- timeout setting add by howard 2015.12.10 -->
+	<session-config>
+		<session-timeout>20</session-timeout>
+	</session-config>
+	<welcome-file-list>
+
+	</welcome-file-list>
+	<!-- error page config -->
+
+</web-app>
